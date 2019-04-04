@@ -1,11 +1,5 @@
 package tester;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.util.Arrays;
-
 import oneShot.PlayerToM1Shot;
 import oneShot.Setting1Shot;
 
@@ -20,8 +14,8 @@ public class Tester1Shot {
 		int boardSize = 5;
 		int nrColors = 5;
 		int nrChipsPerPlayer = 4;
-		int levelp1 =  0;
-		int levelp2 = 0;
+		int levelp1 =  2;
+		int levelp2 = 2;
 		
 		if (args.length == 2) {
 			levelp1 = Integer.parseInt(args[0]);
@@ -30,8 +24,15 @@ public class Tester1Shot {
 		
 		Setting1Shot setting = new Setting1Shot();
 		setting.generateSetting(boardSize, nrColors, 2, nrChipsPerPlayer);
+		setting.locations[0] = (int)(Math.random()*setting.utilityFunctionsAllocators[0].length);
+		setting.locations[1] = (int)(Math.random()*setting.utilityFunctionsAllocators[1].length);
+		setting.locations[2] = (int)(Math.random()*setting.utilityFunctionsResponder[0].length);
+
 		PlayerToM1Shot p1 = new PlayerToM1Shot(0, levelp1, setting, nrColors, nrChipsPerPlayer);
 		PlayerToM1Shot p2 = new PlayerToM1Shot(1, levelp2, setting, nrColors, nrChipsPerPlayer);
+		System.out.println("Playing a game with ToM levels "+levelp1+" and "+levelp2);
+		System.out.println("Game board:");
+		System.out.println(setting);
 		p1.init(setting.allocatorChipset[0], setting.allocatorChipset[1]);
 		p2.init(setting.allocatorChipset[1], setting.allocatorChipset[0]);
 		int p1Offer = p1.makeOffer();
