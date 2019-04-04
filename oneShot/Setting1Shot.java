@@ -9,12 +9,12 @@ public class Setting1Shot implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	int[][] binMax;
-	int[][][] utilityFunctionsAllocators;
-	int[][][] utilityFunctionsResponder;
+	public int[][][] utilityFunctionsAllocators;
+	public int[][][] utilityFunctionsResponder;
 	public int[] allocatorChipset;
 	int[] responderChipset;
 	int[][] board;
-	int[] locations;
+	public int[] locations;
 	
 	static final int SCORE_GOAL = 500;
 	static final int SCORE_STEP = 100;
@@ -104,33 +104,29 @@ public class Setting1Shot implements Serializable {
 		for (i = 0; i < board.length; ++i) {
 			outVal += board[i][0];
 			for (j = 1; j < board.length; ++j) {
-				outVal += "\t"+board[i][j];
+				outVal += "  "+board[i][j];
 			}
 			outVal += "\n";
 		}
 		int [] bins;
 		for (i = 0; i < allocatorChipset.length; ++i) {
 			bins = Chips.getBins(allocatorChipset[i], binMax[i]);
-			outVal += "P"+i+":";
+			outVal += "P"+i+" chips:";
 			for (j = 0; j < bins.length; ++j) {
-				outVal += "\t"+bins[j];
+				for (int k = 0; k < bins[j]; ++k) {
+					outVal += "  "+j;
+				}
 			}
-			bins = Chips.getBins(responderChipset[i], binMax[i]);
-			outVal += "\t\t";
-			for (j = 0; j < bins.length; ++j) {
-				outVal += "\t"+bins[j];
+			outVal += "\tgoal location: "+locations[i]+"\n";
+		}
+		bins = Chips.getBins(responderChipset[0], binMax[0]);
+		outVal += "R chips: ";
+		for (j = 0; j < bins.length; ++j) {
+			for (int k = 0; k < bins[j]; ++k) {
+				outVal += "  "+j;
 			}
-			outVal +="\n";
 		}
-		outVal += "Locations:";
-		for (i = 0; i < locations.length; ++i) {
-			outVal += "\t"+locations[i];
-		}
-		outVal += "\nStartscore:";
-		for (i = 0; i < locations.length-1; ++i) {
-			outVal += "\t"+utilityFunctionsAllocators[i][locations[i]][allocatorChipset[i]];
-		}
-		outVal += "\t"+utilityFunctionsResponder[0][locations[locations.length-1]][allocatorChipset[0]];
+		outVal += "\tgoal location: "+locations[2] + "\n";
 /*		for (i = 0; i < utilityFunctionsAllocators[0].length; ++i) {
 			outVal += "Location "+i+":";
 			for (j = 0; j < utilityFunctionsAllocators.length; ++j) {

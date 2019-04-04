@@ -171,7 +171,7 @@ public class PlayerToM1Shot extends Player1Shot {
 				bestOffer.clear();
 				bestOffer.add(new Integer(i));
 				bestOfferValue = curValue;
-			} else if (curValue == bestOfferValue) {
+			} else if (curValue == bestOfferValue && curValue > 0) {
 				bestOffer.add(new Integer(i));
 			}
 		}
